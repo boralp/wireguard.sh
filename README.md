@@ -137,57 +137,6 @@ sudo ufw allow 443/udp
 sudo ufw enable
 ```
 
-````md
-## Optional: Firewall Hardening
-
-After installation, you can restrict inbound traffic to reduce attack surface.
-
-**Warning:** Misconfiguration can lock you out of your server.  
-Always ensure SSH access is allowed before applying restrictive rules.
-
-### Using iptables (manual control)
-
-```bash
-# Check current rules
-sudo iptables -L -n
-
-# Allow SSH (adjust port if needed)
-sudo iptables -I INPUT -p tcp --dport 22 -j ACCEPT
-
-# Allow WireGuard (UDP 443 or your chosen port)
-sudo iptables -I INPUT -p udp --dport 443 -j ACCEPT
-
-# Allow established/related connections (required)
-sudo iptables -I INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-
-# Allow loopback
-sudo iptables -I INPUT -i lo -j ACCEPT
-
-# Set default policies
-sudo iptables -P INPUT DROP
-sudo iptables -P FORWARD DROP
-sudo iptables -P OUTPUT ACCEPT
-
-# Persist rules (Ubuntu)
-sudo apt install -y iptables-persistent
-sudo iptables-save | sudo tee /etc/iptables/rules.v4
-````
-
-### Using UFW (simpler)
-
-```bash
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-
-# Allow SSH (adjust port if needed)
-sudo ufw allow 22/tcp
-
-# Allow WireGuard (UDP 443 or your chosen port)
-sudo ufw allow 443/udp
-
-sudo ufw enable
-```
-
 ---
 
 ## Optional: Fail2Ban (SSH protection)
