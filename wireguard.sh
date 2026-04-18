@@ -212,7 +212,7 @@ EOF
   echo "Port: UDP ${PORT}"
   echo "Endpoint: ${ENDPOINT}"
   echo "External interface: ${EXT_IFACE}"
-  echo "Add a client with: wg-safe create bora"
+  echo "Add a client with: wg-safe create username1"
 }
 
 create_cmd() {
